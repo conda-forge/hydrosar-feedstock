@@ -6,12 +6,12 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/hydrosar-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/hydrosar-{{ version }}.tar.gz
   sha256: 8ef6627e8924dbf590449dd9f510d04a30750246bebb69bae2367368d7cfbf17
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   entry_points:
     - calculate_hand = hydrosar.hand.calculate:main
@@ -20,15 +20,15 @@ build:
 
 requirements:
   host:
-    - python >=3.8
+    - python {{ python_min }}
     - pip
     - python-build
     - setuptools >=61.0
     - setuptools-scm >=6.2
   run:
-    - python >=3.8
+    - python >={{ python_min }}
     - asf_tools >=0.6
-    - astropy
+    - astropy-base
     - fiona
     - gdal >=3.3
     - numpy
@@ -49,6 +49,7 @@ test:
     - make_FD30 --help
     - make_HYDRO30 --help
   requires:
+    - python {{ python_min }}
     - pip
 
 about:
